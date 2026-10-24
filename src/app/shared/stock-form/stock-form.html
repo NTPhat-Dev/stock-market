@@ -1,0 +1,61 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="stock-form" novalidate>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Tên cổ phiếu</mat-label>
+    <input matInput formControlName="name" autocomplete="off" />
+    @if (form.controls.name.invalid) {
+      <mat-error>Tên cần ít nhất 3 ký tự, không chỉ khoảng trắng.</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Mã cổ phiếu</mat-label>
+    <input matInput formControlName="code" maxlength="10" autocomplete="off" />
+    @if (form.controls.code.invalid) {
+      <mat-error>Mã gồm 2–10 ký tự chữ hoặc số.</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Giá cổ phiếu (USD)</mat-label>
+    <input matInput type="number" formControlName="price" min="0.01" step="0.01" />
+    @if (form.controls.price.invalid) {
+      <mat-error>Giá phải lớn hơn hoặc bằng 0.01.</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Sàn giao dịch</mat-label>
+    <mat-select formControlName="exchange">
+      @for (exchange of exchanges; track exchange) {
+        <mat-option [value]="exchange">{{ exchange }}</mat-option>
+      }
+    </mat-select>
+    @if (form.controls.exchange.invalid) {
+      <mat-error>Hãy chọn sàn giao dịch.</mat-error>
+    }
+  </mat-form-field>
+  <mat-checkbox formControlName="confirmed">Tôi xác nhận thông tin trên là chính xác.</mat-checkbox>
+  @if (form.controls.confirmed.touched && form.controls.confirmed.invalid) {
+    <p class="error">Bạn cần xác nhận thông tin.</p>
+  }
+  <div class="actions">
+    <button matButton="outlined" type="button" (click)="reset()" [disabled]="pending()">
+      Nhập lại
+    </button>
+    <button matButton="filled" type="submit" [disabled]="form.invalid || pending()">
+      {{ pending() ? 'Đang lưu…' : submitLabel() }}
+    </button>
+  </div>
+</form>
+@if (inspect()) {
+  <div class="form-inspector">
+    <h3>Giá trị và trạng thái FormGroup</h3>
+    <pre>{{ form.getRawValue() | json }}</pre>
+    <p>
+      Form Control status: <strong>{{ form.status }}</strong>
+    </p>
+    @if (submittedValue) {
+      <h3>Kết quả Submit</h3>
+      <pre>{{ submittedValue | json }}</pre>
+      <h3>Dữ liệu FormData</h3>
+      <pre>{{ formDataValue | json }}</pre>
+    }
+  </div>
+}

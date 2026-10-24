@@ -1,0 +1,44 @@
+<section class="panel account-panel">
+  <p class="eyebrow">Stock Market</p>
+  <h1>{{ register() ? 'Tạo tài khoản' : 'Đăng nhập' }}</h1>
+  <p class="muted">
+    {{
+      register()
+        ? 'Tạo tài khoản để bắt đầu quản lý danh sách cổ phiếu.'
+        : 'Đăng nhập để tiếp tục với danh sách cổ phiếu.'
+    }}
+  </p>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="stock-form" novalidate>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic"
+      ><mat-label>Tên người dùng</mat-label>
+      <input matInput formControlName="username" autocomplete="username" />
+      @if (form.controls.username.invalid) {
+        <mat-error>Dùng 3–30 ký tự chữ, số hoặc dấu gạch dưới.</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" subscriptSizing="dynamic"
+      ><mat-label>Mật khẩu</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        [autocomplete]="register() ? 'new-password' : 'current-password'"
+      />
+      @if (form.controls.password.invalid) {
+        <mat-error>Mật khẩu cần từ 8 đến 128 ký tự.</mat-error>
+      }
+    </mat-form-field>
+    @if (error()) {
+      <p class="error" role="alert">{{ error() }}</p>
+    }
+    <button matButton="filled" type="submit" [disabled]="form.invalid || pending()">
+      {{ pending() ? 'Đang xử lý…' : register() ? 'Đăng ký' : 'Đăng nhập' }}
+    </button>
+  </form>
+  <p class="account-switch">
+    {{ register() ? 'Đã có tài khoản?' : 'Chưa có tài khoản?' }}
+    <a [routerLink]="register() ? '/login' : '/register'">{{
+      register() ? 'Đăng nhập' : 'Đăng ký ngay'
+    }}</a>
+  </p>
+</section>

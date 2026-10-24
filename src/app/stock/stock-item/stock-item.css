@@ -1,0 +1,96 @@
+:host {
+  display: block;
+}
+.stock-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  background: white;
+}
+:host:last-child .stock-row {
+  border-bottom: 0;
+}
+.favorite-row {
+  background: #f4f8ff;
+}
+.stock-identity {
+  flex: 1 1 180px;
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+.stock-title {
+  padding: 0;
+  text-align: left;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+  color: #173c72;
+  overflow-wrap: anywhere;
+}
+.stock-title:hover {
+  text-decoration: underline;
+}
+.stock-title span {
+  color: #64748b;
+  font-weight: 400;
+}
+.exchange {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+.quote {
+  display: grid;
+  gap: 4px;
+  min-width: 140px;
+  color: #67717d;
+  overflow-wrap: anywhere;
+}
+.quote strong {
+  font-size: 23px;
+}
+.quote small {
+  color: #64748b;
+  font-size: 12px;
+}
+.price-up {
+  color: #187144;
+}
+.price-down {
+  color: #bd283c;
+}
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-width: 0;
+}
+.delete-button {
+  color: #b42336;
+}
+@media (max-width: 1050px) {
+  .stock-row {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .row-actions {
+    width: 100%;
+  }
+}
+@media (max-width: 520px) {
+  .stock-row {
+    padding: 18px 14px;
+  }
+  .stock-identity {
+    flex-basis: 100%;
+  }
+  .quote {
+    min-width: 0;
+    width: 100%;
+  }
+}

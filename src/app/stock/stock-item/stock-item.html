@@ -1,0 +1,52 @@
+<article class="stock-row" [class.favorite-row]="stock.favorite">
+  <div class="stock-identity">
+    <button type="button" class="stock-title" (click)="openPage.emit(stock)" [disabled]="busy">
+      {{ stock.name }} <span>({{ stock.code }})</span></button
+    ><span class="exchange">{{ stock.exchange }}</span>
+  </div>
+  <div
+    class="quote"
+    [class.price-up]="stock.price > stock.previousPrice"
+    [class.price-down]="stock.price < stock.previousPrice"
+  >
+    <strong>{{ stock.price | currency: 'USD' : 'symbol' : '1.2-2' }}</strong>
+    <span>{{ stock | stockChange }}</span
+    ><small>Giá trước: {{ stock.previousPrice | currency: 'USD' }}</small>
+  </div>
+  <div class="row-actions">
+    <button
+      matButton
+      [attr.aria-pressed]="stock.favorite"
+      [disabled]="busy"
+      (click)="favorite.emit(stock)"
+      [attr.aria-label]="(stock.favorite ? 'Bỏ yêu thích ' : 'Yêu thích ') + stock.code"
+    >
+      {{ stock.favorite ? '★ Đã thích' : '☆ Yêu thích' }}
+    </button>
+    <button
+      matButton
+      [disabled]="busy"
+      (click)="details.emit(stock)"
+      [attr.aria-label]="'Chi tiết ' + stock.code"
+    >
+      Chi tiết
+    </button>
+    <button
+      matButton
+      [disabled]="busy"
+      (click)="edit.emit(stock)"
+      [attr.aria-label]="'Sửa ' + stock.code"
+    >
+      Sửa
+    </button>
+    <button
+      matButton
+      class="delete-button"
+      [disabled]="busy"
+      (click)="remove.emit(stock)"
+      [attr.aria-label]="'Xóa ' + stock.code"
+    >
+      Xóa
+    </button>
+  </div>
+</article>

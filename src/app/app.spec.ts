@@ -1,24 +1,22 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { App } from './app';
 
 describe('App', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  it('renders Material navigation and restores the current account', async () => {
+    TestBed.configureTestingModule({
       imports: [App],
-    })
-      .compileComponents();
-  });
-
-  it('should create the app', () => {
+      providers: [provideRouter([]), provideHttpClient(), provideHttpClientTesting()],
+    });
     const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
+    const http = TestBed.inject(HttpTestingController);
+    http.expectOne('/api/auth/me').flush({ id: 1, username: 'student' });
     await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, stock-market');
+    const page = fixture.nativeElement as HTMLElement;
+    expect(page.querySelector('.brand')?.textContent).toContain('Stock Market');
+    expect(page.querySelector('nav[aria-label="Menu ngang"]')?.textContent).toContain('Đăng xuất');
+    http.verify();
   });
 });

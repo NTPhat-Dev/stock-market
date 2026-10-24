@@ -1,0 +1,72 @@
+<section>
+  <div class="page-heading">
+    <div>
+      <p class="eyebrow">{{ local ? 'Bài 6 · Observable & Service' : 'Stock Market · Bài 7–9' }}</p>
+      <h1>Danh sách cổ phiếu</h1>
+      <p class="muted">
+        {{
+          local
+            ? 'Dữ liệu dùng chung trong StockService.'
+            : 'Theo dõi, tìm kiếm và quản lý cổ phiếu của bạn.'
+        }}
+      </p>
+    </div>
+    @if (!local) {
+      <a matButton="filled" routerLink="/stocks/create">+ Tạo cổ phiếu</a>
+    }
+  </div>
+  <div class="list-toolbar">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic"
+      ><mat-label>Tìm theo tên, mã hoặc sàn</mat-label>
+      <input matInput [formControl]="search" type="search"
+    /></mat-form-field>
+    <button matButton="outlined" (click)="reload()" [disabled]="busy()">Tải lại</button>
+  </div>
+  @if (operationError()) {
+    <p class="error" role="alert">{{ operationError() }}</p>
+  }
+  @if (state$ | async; as state) {
+    @if (state.loading) {
+      <p role="status">Đang tải danh sách…</p>
+    } @else if (state.error) {
+      <div class="panel">
+        <p role="alert" class="error">{{ state.error }}</p>
+        <button matButton (click)="reload()">Thử lại</button>
+      </div>
+    } @else {
+      <p class="muted" aria-live="polite">
+        {{ state.stocks.length }} cổ phiếu{{ search.value ? ' phù hợp' : '' }}
+      </p>
+      <div class="stock-list panel-flush">
+        @for (stock of state.stocks; track stock.id) {
+          <app-stock-item
+            [stock]="stock"
+            [busy]="busy()"
+            (favorite)="favorite($event)"
+            (edit)="edit($event)"
+            (remove)="remove($event)"
+            (details)="details($event)"
+            (openPage)="openPage($event)"
+          />
+        } @empty {
+          <p class="empty-state">
+            {{
+              search.value
+                ? 'Không tìm thấy cổ phiếu phù hợp.'
+                : 'Chưa có cổ phiếu. Hãy tạo cổ phiếu đầu tiên.'
+            }}
+          </p>
+        }
+      </div>
+    }
+  }
+  @if (local) {
+    <div class="section-gap">
+      <app-create-stock
+        heading="Thêm cổ phiếu vào StockService"
+        [pending]="busy()"
+        (created)="create($event)"
+      />
+    </div>
+  }
+</section>

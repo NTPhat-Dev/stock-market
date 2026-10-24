@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.app-toolbar {
+  flex-shrink: 0;
+  background: #183c68;
+  color: white;
+  gap: 12px;
+  height: 76px;
+  padding: 0 24px;
+}
+.brand {
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  display: grid;
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 650;
+}
+.brand span {
+  color: #c6d8ed;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  font-weight: 400;
+}
+.toolbar-spacer {
+  flex: 1;
+}
+.top-nav {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.top-nav a,
+.top-nav button,
+.menu-button {
+  color: white;
+}
+.top-nav .active-link {
+  background: #315783;
+}
+.username {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #d9e7f7;
+  font-size: 13px;
+  margin: 0 8px;
+}
+.app-container {
+  flex: 1;
+  min-height: 0;
+  background: #f3f6fa;
+}
+.side-menu {
+  width: 280px;
+  max-width: calc(100vw - 32px);
+  border-radius: 0;
+}
+.side-heading {
+  font-size: 18px;
+  padding: 20px 24px 4px;
+}
+.side-menu .active-link {
+  background: #e7effb;
+}
+.side-links {
+  display: grid;
+  gap: 4px;
+  padding: 0 12px 16px;
+}
+.side-links a,
+.side-links button {
+  justify-content: flex-start;
+  min-height: 42px;
+  border-radius: 6px;
+}
+.main-content {
+  width: 100%;
+  max-width: 1280px;
+  margin: auto;
+  padding: 40px 32px;
+  flex: 1;
+}
+.app-container mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+}
+footer {
+  padding: 18px 32px;
+  color: #64748b;
+  text-align: center;
+  font-size: 12px;
+}
+@media (max-width: 640px) {
+  .app-toolbar {
+    padding: 0 8px;
+    gap: 2px;
+    height: 68px;
+  }
+  .brand {
+    font-size: 16px;
+  }
+  .menu-button {
+    min-width: 40px;
+    width: 40px;
+    padding: 0;
+  }
+  .brand span,
+  .username {
+    display: none;
+  }
+  .top-nav {
+    gap: 0;
+  }
+  .top-nav a,
+  .top-nav button {
+    min-width: 0;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+  .main-content {
+    padding: 24px 16px;
+  }
+}
+@media (max-width: 420px) {
+  .top-nav .stocks-link {
+    display: none;
+  }
+  .brand {
+    font-size: 15px;
+  }
+}

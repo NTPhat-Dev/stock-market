@@ -1,0 +1,102 @@
+<section class="panel template-panel">
+  <h1>{{ heading }}</h1>
+  <p class="muted">Tạo cổ phiếu và quan sát trạng thái của từng trường nhập liệu.</p>
+  <form #stockForm="ngForm" (ngSubmit)="onSubmit(stockForm)" novalidate>
+    <div class="form-group">
+      <label for="template-name">Tên cổ phiếu</label>
+      <input
+        id="template-name"
+        name="name"
+        class="form-control stock-name"
+        [(ngModel)]="stock.name"
+        #nameModel="ngModel"
+        required
+        minlength="3"
+        pattern="\s*\S.{1,}\S\s*"
+      />
+      @if (
+        (nameModel.invalid || stock.name.trim().length < 3) &&
+        (nameModel.touched || nameModel.dirty)
+      ) {
+        <small class="error">Tên cần ít nhất 3 ký tự, không chỉ khoảng trắng.</small>
+      }
+      <small class="hint">Valid: xanh · Invalid: hồng</small>
+    </div>
+    <div class="form-group">
+      <label for="template-code">Mã cổ phiếu</label>
+      <input
+        id="template-code"
+        name="code"
+        class="form-control stock-code"
+        [(ngModel)]="stock.code"
+        #codeModel="ngModel"
+        required
+        pattern="[A-Za-z0-9]{2,10}"
+      />
+      @if (codeModel.invalid && (codeModel.dirty || codeModel.touched)) {
+        <small class="error">Mã gồm 2–10 ký tự chữ hoặc số.</small>
+      }
+      <small class="hint">Pristine: xanh · Dirty: hồng</small>
+    </div>
+    <div class="form-group">
+      <label for="template-price">Giá cổ phiếu (USD)</label>
+      <input
+        id="template-price"
+        type="number"
+        name="price"
+        class="form-control stock-price"
+        [(ngModel)]="stock.price"
+        #priceModel="ngModel"
+        required
+        min="0.01"
+        step="0.01"
+      />
+      @if (priceModel.invalid && priceModel.touched) {
+        <small class="error">Giá phải từ 0.01 trở lên.</small>
+      }
+      <small class="hint">Untouched: xanh · Touched: hồng</small>
+    </div>
+    <div class="form-group">
+      <label for="template-exchange">Sàn giao dịch</label>
+      <select
+        id="template-exchange"
+        name="exchange"
+        class="form-control"
+        [(ngModel)]="stock.exchange"
+        required
+      >
+        @for (exchange of exchanges; track exchange) {
+          <option [value]="exchange">{{ exchange }}</option>
+        }
+      </select>
+    </div>
+    <label class="confirmation"
+      ><input type="checkbox" name="confirmed" [(ngModel)]="confirmed" required />Tôi xác nhận thông
+      tin trên là chính xác.</label
+    >
+    <div class="actions">
+      <button
+        matButton="outlined"
+        type="button"
+        (click)="resetForm(stockForm)"
+        [disabled]="pending"
+      >
+        Nhập lại
+      </button>
+      <button
+        matButton="filled"
+        type="submit"
+        [disabled]="stockForm.invalid || stock.name.trim().length < 3 || pending"
+      >
+        Create Stock
+      </button>
+    </div>
+    <div class="form-inspector">
+      <pre>{{ stock | json }}</pre>
+      <p>Data has been confirmed: {{ confirmed }}</p>
+    </div>
+    @if (result) {
+      <p role="status" class="success">Đã gửi cổ phiếu {{ result.code }}.</p>
+    }
+  </form>
+</section>

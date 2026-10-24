@@ -1,0 +1,42 @@
+{
+  "stocks": [
+    {
+      "id": 2,
+      "name": "Second Stock Company",
+      "code": "SSC",
+      "price": 10,
+      "previousPrice": 20,
+      "exchange": "NSE",
+      "favorite": false
+    },
+    {
+      "id": 3,
+      "name": "Last Stock Company",
+      "code": "LSC",
+      "price": 876,
+      "previousPrice": 765,
+      "exchange": "NYSE",
+      "favorite": false
+    },
+    {
+      "name": "ưaegerg",
+      "code": "DFB",
+      "price": 435,
+      "exchange": "NASDAQ",
+      "favorite": false,
+      "previousPrice": 435,
+      "id": 4
+    }
+  ],
+  "users": [
+    {
+      "id": 2,
+      "username": "admin",
+      "salt": "751ce8ef32baa2aab0a1243b0a9392fc",
+      "passwordHash": "701c2525bba01eb860dd937e82981b0cf8c08df761d4c3d331b0310a7f27f43ea1fe7b43100dd52ebc5f66cfebb3dd264a2c6ab98dddd175bad64f857da145d4"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
